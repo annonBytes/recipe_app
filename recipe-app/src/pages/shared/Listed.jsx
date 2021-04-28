@@ -11,9 +11,17 @@ export const Listed = () => {
     const fetchRecipes = async () => {
         const res = db.collection('recipes')
         const data = await res.get()
-        data.docs.forEach(item => {
-            getRecipes([...recipes, item.data()])
+        const  fetchedRecipe = data.docs.map(item => {
+            return item.data()
         })
+        setRecipes(fetchedRecipe)
+        
+
+        // data.docs.forEach(item => {
+        //     setRecipes([...recipes, item.data()])
+
+        //use map and retun item data.
+        //})
     }
 
     useEffect(() =>{

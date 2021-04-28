@@ -1,84 +1,45 @@
-import React, { useState } from 'react'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import AddIcon from '@material-ui/icons/Add';
-import IconButton from '@material-ui/core/IconButton'
-import DeleteIcon from '@material-ui/icons/Delete';
+import React, { useState, useEffect } from 'react'
+import { Provider, useDispatch } from "react-redux";
+import { addInventory } from '../../store/inventorySlice'
+// import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+// import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+// import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+// import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+// import AddIcon from '@material-ui/icons/Add';
+// import IconButton from '@material-ui/core/IconButton'
+// import DeleteIcon from '@material-ui/icons/Delete';
+// import { useStateValue } from '../../StateProvider';
 import './styles/inventory.css'
 import Header from './header';
-import { useStateValue } from '../../StateProvider';
+import { Input } from '../../components/Input/input'
+import { Button } from '../../components/Button/button'
+import { ErrorMessage } from '../../components/ErrorText/error'
+import { useFilteredInventory } from '../../hooks/useFilteredInventory'
+import { toggleInventory } from '../../store/inventorySlice'
+import { InventoryItem } from './InventoryItem';
 
 
 export const Inventory = () => {
 
-    const [{ item },] = useStateValue()
+    const [value, setValue] = useState('')
+    const [error, setError] = useState(false)
+    const dispatch = useDispatch()
 
-    const [inputValue, setInputValue] = useState('');
+    const filteredInventory = useFilteredInventory()
 
-    const [items, setItems] = useState([
-        { itemName: 'Buy carrot', quantity: 1, isSelected: false },
-    ])
+    const onAdd = () => {
+        if (value !== '') {
+            dispatch(addInventory(value))
+            setValue('')
+        }
+        else {
+            setError(true)
+        }
+    }
 
-    const [totalItemCount, setTotalItemCount] = useState(1);
-
-
-    const handleAddButtonClick = () => {
-        const newItem = {
-            itemName: inputValue,
-            quantity: 1,
-            isSelected: false,
-        };
-
-        const newItems = [...items, newItem];
-
-        setItems(newItems);
-        setInputValue('');
-    };
-
-
-    const toggleComplete = (index: any) => {
-        const newItems = [...items];
-
-        newItems[index].isSelected = !newItems[index].isSelected;
-
-        setItems(newItems);
-
-        calculateTotal();
-    };
-
-    const handleQuantityIncrease = (index: any) => {
-        const newItems = [...items];
-
-        newItems[index].quantity++;
-
-        setItems(newItems);
-
-        calculateTotal();
-    };
-
-    const handleQuantityDecrease = (index: any) => {
-        const newItems = [...items];
-
-        newItems[index].quantity--;
-
-        setItems(newItems);
-
-        calculateTotal();
-    };
-
-    const calculateTotal = () => {
-        const totalItemCount = items.reduce((total, item) => {
-            return total + item.quantity;
-        }, 0);
-
-        setTotalItemCount(totalItemCount);
-    };
-
-
-
-
+    useEffect(() => {
+        setError(false)
+    }, [value])
 
 
     return (
@@ -87,57 +48,26 @@ export const Inventory = () => {
             <div className="inventory">
                 <div className="inventory__container">
                     <div className='add-item-box'>
-                        <input className='add-item-input' placeholder='Add an item...' value={inputValue} onChange={(event) => setInputValue(event.target.value)} />
-                        <IconButton onClick={() => handleAddButtonClick()} >
-                            <AddIcon fontSize="large" />
-                        </IconButton>
-
-
+                        <Input
+                            className='add-item-input'
+                            placeholder='Add an item...'
+                            value={value}
+                            onChange={(event) => setValue(event.currentTarget.value)}
+                            clearable
+                            onClear={() => setValue('')}
+                        />
+                        <Button className="btn" onClick={onAdd}>Add</Button>
                     </div>
+                    <div>
+                        {error && <ErrorMessage>Input cannot be empty</ErrorMessage>}
+                    </div>
+
 
                     <div className='item-list'>
-                        {items.map((item, index) => (
-                            <div className='item-container'>
-                                <div className='item-name' onClick={() => toggleComplete(index)}>
-                                    {item.isSelected ? (
-                                        <>
-                                            <CheckCircleIcon />
-                                            <span className='completed'>{item.itemName}</span>
-
-                                        </>
-                                    ) : (
-                                        <>
-                                            <RadioButtonUncheckedIcon />
-                                            <span>{item.itemName}</span>
-
-                                        </>
-                                    )}
-                                </div>
-                                <div className='quantity'>
-                                    <button>
-                                        <IconButton onClick={() => handleQuantityDecrease(index)}>
-                                            <ChevronLeftIcon />
-                                        </IconButton>
-                                    </button>
-                                    <span> {item.quantity} </span>
-                                    <button>
-                                        <IconButton onClick={() => handleQuantityIncrease(index)}>
-                                            <ChevronRightIcon />
-                                        </IconButton>
-                                    </button>
-
-                                </div>
-                                <button>
-                                    <IconButton>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </button>
-                            </div>
+                        {filteredInventory.map(inventory => (
+                            <InventoryItem key={inventory.id} inventory={inventory} onToggle={() => dispatch(toggleInventory(inventory))} />
                         ))}
                     </div>
-
-                    <div className='total'>Total: {totalItemCount}</div>
-
                 </div>
             </div>
         </>

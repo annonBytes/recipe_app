@@ -42,13 +42,13 @@ const routes: IRoute[] = [
         protected: false
     },
 
-    {
-        path: '/inventory',
-        exact: true,
-        component: Inventory,
-        name: 'Add Inventory',
-        protected: false
-    },
+    // {
+    //     path: '/inventory',
+    //     exact: true,
+    //     component: Inventory,
+    //     name: 'Add Inventory',
+    //     protected: false
+    // },
 
     {
         path: '/myrecipes',

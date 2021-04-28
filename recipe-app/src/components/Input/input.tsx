@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from "react";
-import { Button } from "./Button";
+import { Button } from "../Button/button";
 
 type InputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
     clearable?: boolean
@@ -10,7 +10,10 @@ export const Input = ({ clearable, onClear, ...props }: InputProps) => {
     return (
         <div>
             <input {...props} />
-            {clearable && <Button onClick={() => onClear && onClear()}>Clear</Button>}
+            {clearable &&
+                <Button style={{ marginRight: 20 }} onClick={() => onClear && onClear()}>
+                    clear
+            </Button>}
         </div>
     )
 }

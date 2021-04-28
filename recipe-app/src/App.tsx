@@ -4,6 +4,9 @@ import routes from './config/routes'
 import AuthRoute from './components/AuthRoute'
 import { useStateValue } from './StateProvider'
 import { auth } from './config/firebase'
+import { Inventory } from './pages/shared/Inventory'
+import { Provider } from 'react-redux'
+import { store } from './store'
 
 
 function App() {
@@ -47,7 +50,12 @@ function App() {
                 return <route.component  {...routeProps} />;
               }}
             />)}
+
+          <Provider store={store}>
+            <Inventory />
+          </Provider>
         </Switch>
+
       </BrowserRouter>
     </div>
   );
