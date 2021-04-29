@@ -22,17 +22,6 @@ function PostRecipe() {
         <div className="feed">
             <Header />
              <Listed />
-          
-            {/* {recipes.map((recipe) => (
-                <RecipeSender
-                    key={recipe.data.id}
-                    label={recipe.data.label}
-                    Ingredients={recipe.data.Ingridients}
-                    image={recipe.data.image}
-                    calories={recipe.data.calories}
-                    timestamp={recipe.data.timestamp}
-                />
-            ))} */}
         </div>
     )
 }

@@ -6,7 +6,6 @@ import { auth } from '../../config/firebase'
 import './styles/header.css'
 import logo from '../../assets/food.svg'
 import LocalPharmacyIcon from '@material-ui/icons/LocalPharmacy'
-import SubscriptionsIcon from '@material-ui/icons/Subscriptions'
 import StorefrontIcon from '@material-ui/icons/Storefront'
 import KitchenIcon from '@material-ui/icons/Kitchen';
 
@@ -48,6 +47,15 @@ const Header = props => {
 
 
                 <div className="header__center">
+
+                <div className="header__option" onClick={AddInventory}>
+                        <IconButton>
+                            <StorefrontIcon fontSize="large" />
+                        </IconButton>
+                        <span className="header__option--text">Add Inventory</span>
+                    </div>
+
+                    
                     <div className="header__option" onClick={AddRecipe}>
                         <IconButton>
                             <LocalPharmacyIcon fontSize="large" />
@@ -55,12 +63,7 @@ const Header = props => {
                         <span className="header__option--text">Add Recipe</span>
                     </div>
 
-                    <div className="header__option" onClick={AddInventory}>
-                        <IconButton>
-                            <StorefrontIcon fontSize="large" />
-                        </IconButton>
-                        <span className="header__option--text">Add Inventory</span>
-                    </div>
+                  
 
                     <div className="header__option" onClick={AddSavedRecipe}>
                      <IconButton>
@@ -68,13 +71,6 @@ const Header = props => {
                         </IconButton>
                         <span className="header__option--text">Added recipe</span>
                     </div>
-
-                    {/* <div className="header__option">
-                    <IconButton>
-                        <SubscriptionsIcon fontSize="large" />
-                    </IconButton>
-                        <span className="header__option--text">Saved recipe</span>
-                    </div> */}
                 </div>
 
 

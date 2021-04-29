@@ -2,7 +2,6 @@ import IRoute from "../interfaces/route";
 import LoginPage from "../pages/auth/login";
 import RegisterPage from "../pages/auth/register";
 import HomePage from "../pages/home";
-import { Inventory } from "../pages/shared/Inventory";
 import PostRecipe from "../pages/shared/PostRecipe";
 import RecipeSender from "../pages/shared/RecipeSender";
 
@@ -42,13 +41,6 @@ const routes: IRoute[] = [
         protected: false
     },
 
-    // {
-    //     path: '/inventory',
-    //     exact: true,
-    //     component: Inventory,
-    //     name: 'Add Inventory',
-    //     protected: false
-    // },
 
     {
         path: '/myrecipes',

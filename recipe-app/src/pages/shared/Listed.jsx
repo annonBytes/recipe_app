@@ -15,13 +15,6 @@ export const Listed = () => {
             return item.data()
         })
         setRecipes(fetchedRecipe)
-        
-
-        // data.docs.forEach(item => {
-        //     setRecipes([...recipes, item.data()])
-
-        //use map and retun item data.
-        //})
     }
 
     useEffect(() =>{
@@ -33,16 +26,17 @@ export const Listed = () => {
            {
                recipes && recipes.map(recipe => {
                    return (
-                       <div className="list_container">
+                           <div className="list__card">
                           <img src={recipe.image} className="card"/>
                                <div className="content">
                                     <h2 className="title">{recipe.title}</h2>
-                                    <p className="sub__text">{recipe.ingredients}
-                                       Ingridients
-                                    </p>
-                                    <p>Calories:{recipe.calories}</p>
+                                    <p className="sub__text">
+                                       Ingridients:{recipe.ingredient}
+                                    </p> 
+                                    <p><span style={{fontSize: 16, color: 'red', fontWeight: 'bold'}}>Calories:</span>{recipe.calories}kcal</p>
                                </div>
-                       </div>
+                            </div>
+                       
                    )
                })
            }

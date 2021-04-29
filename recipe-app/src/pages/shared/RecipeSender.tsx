@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { db } from '../../config/firebase'
 import firebase from "firebase"
 import "./styles/recipe.css"
@@ -7,10 +7,12 @@ import ReactNotification from 'react-notifications-component'
 import { store } from 'react-notifications-component';
 import "animate.css-react"
 import 'react-notifications-component/dist/theme.css'
+import { useHistory } from 'react-router'
 
 
 function RecipeSender() {
 
+    const history = useHistory()
 
     const [input, setInput] = useState("")
 
@@ -30,6 +32,8 @@ function RecipeSender() {
             calories: kcal,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
+
+
 
         setInput("")
         setImageUrl("")
@@ -54,6 +58,8 @@ function RecipeSender() {
 
     }
 
+
+
     return (
         <>
             <ReactNotification />
@@ -77,6 +83,27 @@ function RecipeSender() {
                         </div>
 
                         <div>
+                            <input
+                                type="text"
+                                value={imageUrl}
+                                onChange={(e) => setImageUrl(e.target.value)}
+                                placeholder={"image URL"}
+                                className="form__textinput"
+                            />
+                        </div>
+
+                        <div>
+                            <input
+                                type="text"
+                                value={kcal}
+                                onChange={(e) => setKcal(e.target.value)}
+                                placeholder={"Enter Calories in Kcal"}
+                                className="form__textinput"
+                            />
+                        </div>
+
+
+                        <div>
                             <textarea
                                 className="form__textinput"
                                 placeholder="write down the ingridients"
@@ -87,15 +114,6 @@ function RecipeSender() {
                             />
                         </div>
 
-                        <div>
-                            <input
-                                type="text"
-                                value={imageUrl}
-                                onChange={(e) => setImageUrl(e.target.value)}
-                                placeholder={"image URL"}
-                                className="form__textinput"
-                            />
-                        </div>
 
                         <button
                             type="submit"
