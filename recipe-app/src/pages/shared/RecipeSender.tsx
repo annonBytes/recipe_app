@@ -33,8 +33,6 @@ function RecipeSender() {
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         })
 
-
-
         setInput("")
         setImageUrl("")
         setLabel("")
