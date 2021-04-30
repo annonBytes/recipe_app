@@ -1,5 +1,5 @@
 {
   "projects": {
-    "recipe-app": "recipe-app-d9936"
+    "default": "recipe-app-d9936"
   }
 }
